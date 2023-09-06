@@ -8,10 +8,7 @@ import com.xuecheng.content.model.dto.QueryCourseParamsDto;
 import com.xuecheng.content.model.po.CourseBase;
 import com.xuecheng.content.service.CourseBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Xue
@@ -29,5 +26,10 @@ public class CourseBaseInfoController {
     @PostMapping("/course")
     public CourseBaseInfoDto add(@RequestBody AddCourseDto addCourseDto){
         return  courseBaseService.add(1232114145L,addCourseDto);
+    }
+
+    @GetMapping("/course/{courseId}")
+    public CourseBaseInfoDto get(@PathVariable Long courseId){
+        return courseBaseService.get(courseId);
     }
 }

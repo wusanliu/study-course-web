@@ -21,4 +21,6 @@ public interface CourseBaseService extends IService<CourseBase> {
     public PageResult<CourseBase> pageSearch(PageParams pageParams, QueryCourseParamsDto queryCourseParamsDto);
 
     public CourseBaseInfoDto add(Long companyId, AddCourseDto addCourseDto);
+
+    CourseBaseInfoDto get(Long courseId);
 }

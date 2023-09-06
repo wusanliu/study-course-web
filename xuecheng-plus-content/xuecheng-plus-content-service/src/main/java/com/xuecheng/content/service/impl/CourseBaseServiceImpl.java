@@ -89,6 +89,22 @@ public class CourseBaseServiceImpl extends ServiceImpl<CourseBaseMapper, CourseB
         courseBaseInfoDto.setStName(courseCategory1.getName());
         return courseBaseInfoDto;
     }
+
+    @Override
+    public CourseBaseInfoDto get(Long courseId) {
+        CourseBaseInfoDto courseBaseInfoDto = new CourseBaseInfoDto();
+        CourseBase courseBase1 = courseBaseMapper.selectById(courseId);
+        BeanUtils.copyProperties(courseBase1,courseBaseInfoDto);
+        CourseMarket courseMarket1 = courseMarketMapper.selectById(courseId);
+        BeanUtils.copyProperties(courseMarket1,courseBaseInfoDto);
+//        把课程分类的名称放到结果中
+        CourseCategory courseCategory = courseCategoryMapper.selectById(courseBaseInfoDto.getMt());
+        courseBaseInfoDto.setMtName(courseCategory.getName());
+        CourseCategory courseCategory1 = courseCategoryMapper.selectById(courseBaseInfoDto.getSt());
+        courseBaseInfoDto.setStName(courseCategory1.getName());
+        return courseBaseInfoDto;
+    }
+
     public void savecourseMarket(CourseMarket courseMarket){
 //        这里需要判断参数合法性，省略
 //        判断是要更新还是添加
