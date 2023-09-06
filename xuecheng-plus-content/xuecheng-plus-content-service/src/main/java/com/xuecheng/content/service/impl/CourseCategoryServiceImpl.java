@@ -31,21 +31,8 @@ public class CourseCategoryServiceImpl extends ServiceImpl<CourseCategoryMapper,
 
     @Override
     public List<CourseCategoryDto> queryTreeNodes(String id) {
-        LambdaQueryWrapper<CourseCategory> queryWrapper = new LambdaQueryWrapper<>();
         //调用mapper递归查询出分类信息
-        List<CourseCategory> courseCategories = courseCategoryMapper.selectList(queryWrapper);
-        ArrayList<CourseCategoryDto> courseCategoryTreeDtos = new ArrayList<>();
-        for(CourseCategory courseCategory:courseCategories){
-            CourseCategoryDto courseCategoryDto = new CourseCategoryDto();
-            courseCategoryDto.setId(courseCategory.getId());
-            courseCategoryDto.setName(courseCategory.getName());
-            courseCategoryDto.setLabel(courseCategory.getLabel());
-            courseCategoryDto.setOrderby(courseCategory.getOrderby());
-            courseCategoryDto.setIsLeaf(courseCategory.getIsLeaf());
-            courseCategoryDto.setIsShow(courseCategory.getIsShow());
-            courseCategoryDto.setParentid(courseCategory.getParentid());
-            courseCategoryTreeDtos.add(courseCategoryDto);
-        }
+        List<CourseCategoryDto> courseCategoryTreeDtos = courseCategoryMapper.selectTreeNodes(id);
 
         //找到每个节点的子节点，最终封装成List<CourseCategoryTreeDto>
         //先将list转成map，key就是结点的id，value就是CourseCategoryTreeDto对象，目的就是为了方便从map获取结点,filter(item->!id.equals(item.getId()))把根结点排除
@@ -60,18 +47,14 @@ public class CourseCategoryServiceImpl extends ServiceImpl<CourseCategoryMapper,
             //找到节点的父节点
             CourseCategoryDto courseCategoryParent = mapTemp.get(item.getParentid());
             if(courseCategoryParent!=null){
-                if(courseCategoryParent.getCourseCategoryList()==null){
+                if(courseCategoryParent.getChildrenTreeNodes()==null){
                     //如果该父节点的ChildrenTreeNodes属性为空要new一个集合，因为要向该集合中放它的子节点
-                    courseCategoryParent.setCourseCategoryList(new ArrayList<CourseCategoryDto>());
+                    courseCategoryParent.setChildrenTreeNodes(new ArrayList<CourseCategoryDto>());
                 }
                 //到每个节点的子节点放在父节点的childrenTreeNodes属性中
-                courseCategoryParent.getCourseCategoryList().add(item);
+                courseCategoryParent.getChildrenTreeNodes().add(item);
             }
-
-
-
         });
-
         return courseCategoryList;
     }
 }
