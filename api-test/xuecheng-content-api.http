@@ -64,3 +64,17 @@ Content-Type: application/json
 ### 课程计划删除
 DELETE {{content_host}}/content/teachplan/298
 
+
+### 课程计划绑定视频
+POST {{content_host}}/content/teachplan/association/media
+Content-Type: application/json
+
+{
+  "mediaId": "3a5a861d1c745d05166132c47b44f9e4",
+  "fileName": "01-Nacos配置管理-内容介绍.avi",
+  "teachplanId": "147"
+}
+
+### 课程计划接触视频绑定
+DELETE {{content_host}}/content/teachplan/association/media/147/3a5a861d1c745d05166132c47b44f9e4
+
