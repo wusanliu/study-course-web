@@ -9,6 +9,7 @@ import com.xuecheng.media.model.po.MediaFiles;
 import com.xuecheng.media.service.MediaFileService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.logging.log4j.core.config.plugins.validation.constraints.Required;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +42,8 @@ public class MediaFilesController {
 
     @ApiOperation("上传图片")
     @RequestMapping(value = "/upload/coursefile",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public UploadFileResult uploadPic(@RequestPart("filedata")MultipartFile filedata) throws IOException {
+    public UploadFileResult uploadPic(@RequestPart("filedata")MultipartFile filedata,
+                                      @RequestParam(value = "objectName",required=false) String objectName) throws IOException {
 //     准备查询条件
         UploadFileParamsDto uploadFileParamsDto = new UploadFileParamsDto();
         uploadFileParamsDto.setFileType("001001");//图片类型
@@ -53,7 +55,7 @@ public class MediaFilesController {
 //     调用service上传图片
         Long companyId=1232141425L;
         String absolutePath = tempFile.getAbsolutePath();
-        UploadFileResult fileResult = mediaFileService.upload(companyId, uploadFileParamsDto, absolutePath);
+        UploadFileResult fileResult = mediaFileService.upload(companyId, uploadFileParamsDto, absolutePath,objectName);
         return fileResult;
     }
 

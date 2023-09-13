@@ -134,6 +134,11 @@ public class MediaFileServiceImpl implements MediaFileService {
   return false;
  }
 
+ @Override
+ public MediaFiles getFileById(String mediaId) {
+  return mediaFilesMapper.selectById(mediaId);
+ }
+
  //获取文件默认存储目录路径 年/月/日
  private String getDefaultFolderPath() {
   SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -151,14 +156,16 @@ public class MediaFileServiceImpl implements MediaFileService {
   }
  }
  @Override
- public UploadFileResult upload(Long companyId, UploadFileParamsDto uploadFileParamsDto, String localFilePath) {
+ public UploadFileResult upload(Long companyId, UploadFileParamsDto uploadFileParamsDto, String localFilePath,String objectName) {
 //   将文件上传到minio
   String filename = uploadFileParamsDto.getFilename();
   String s = filename.substring(filename.lastIndexOf("."));
   String mimeType = getMimeType(s);
-  //  这里有bug,根据文件路径获取文件不合适,凑合写了
+  //  这里有bug,根据文件路径获取文件不合适,凑合写了,其实没bug
   String fileMd5 = getFileMd5(new File(localFilePath));
-  String objectName=getDefaultFolderPath()+fileMd5+s;
+  if(StringUtils.isEmpty(objectName)){
+   objectName=getDefaultFolderPath()+fileMd5+s;
+  }
   boolean b = addMediaFilesToMinIO(localFilePath, mimeType, bucket_mediafiles, objectName);
   if (!b){
    System.out.println("文件上传失败");

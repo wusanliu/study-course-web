@@ -16,12 +16,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.*;
 
-/**
- * @author Mr.M
- * @version 1.0
- * @description TODO
- * @date 2022/10/15 11:58
- */
 @Slf4j
 @Component
 public class VideoTask {
