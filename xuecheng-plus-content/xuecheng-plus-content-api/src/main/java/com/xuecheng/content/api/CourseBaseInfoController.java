@@ -9,6 +9,7 @@ import com.xuecheng.content.model.dto.UpdateCourseDto;
 import com.xuecheng.content.model.po.CourseBase;
 import com.xuecheng.content.service.CourseBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class CourseBaseInfoController {
     @Autowired
     public CourseBaseService courseBaseService;
+    @PreAuthorize("hasAuthority('xc_teachmanger_course_list')")
     @PostMapping("/course/list")
     public PageResult<CourseBase> list(PageParams pageParam, @RequestBody(required = false) QueryCourseParamsDto queryCourseParamsDto){
         return courseBaseService.pageSearch(pageParam,queryCourseParamsDto);
