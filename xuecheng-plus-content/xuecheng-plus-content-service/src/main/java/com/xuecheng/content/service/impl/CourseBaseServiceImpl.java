@@ -137,6 +137,10 @@ public class CourseBaseServiceImpl extends ServiceImpl<CourseBaseMapper, CourseB
         if(i1<0){
             XueChengPlusException.cast("更新失败");
         }
+//        更新营销信息
+        CourseMarket courseMarket2 = new CourseMarket();
+        BeanUtils.copyProperties(updateCourseDto,courseMarket2);
+        savecourseMarket(courseMarket2);
 
         CourseBaseInfoDto courseBaseInfoDto = new CourseBaseInfoDto();
         CourseBase courseBase2 = courseBaseMapper.selectById(courseId);

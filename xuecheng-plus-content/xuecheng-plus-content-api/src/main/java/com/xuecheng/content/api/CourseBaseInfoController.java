@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class CourseBaseInfoController {
     @Autowired
     public CourseBaseService courseBaseService;
-    @PreAuthorize("hasAuthority('xc_teachmanger_course_list')")
+//    @PreAuthorize("hasAuthority('xc_teachmanger_course_list')")
     @PostMapping("/course/list")
     public PageResult<CourseBase> list(PageParams pageParam, @RequestBody(required = false) QueryCourseParamsDto queryCourseParamsDto){
         return courseBaseService.pageSearch(pageParam,queryCourseParamsDto);

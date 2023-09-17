@@ -229,6 +229,12 @@ public class CoursePublishServiceImpl extends ServiceImpl<CoursePublishMapper, C
         }
     }
 
+    @Override
+    public CoursePublish getCoursePublish(Long courseId) {
+        CoursePublish coursePublish = coursePublishMapper.selectById(courseId);
+        return coursePublish;
+    }
+
     private void saveCoursePublish(Long courseId){
         //整合课程发布信息
         //查询课程预发布表
