@@ -9,6 +9,7 @@
         <relativePath>../xuecheng-plus-parent</relativePath> <!-- lookup parent from repository -->
     </parent>
 
+    <packaging>pom</packaging>
     <artifactId>xuecheng-plus-content</artifactId>
 
     <modules>
